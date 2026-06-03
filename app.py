@@ -159,7 +159,7 @@ while True:
                 else:
                     clean_text = final_response.content
 
-                print(f"\nGemini: {clean_text}")
+                print(f"\nRAGent: {clean_text}")
                 chat_history.append(AIMessage(content=clean_text))
 
         else:
@@ -173,7 +173,7 @@ while True:
             else:
                 clean_text = response.content
 
-            print(f"\nGemini: {clean_text}")
+            print(f"\nRAGent: {clean_text}")
             chat_history.append(AIMessage(content=clean_text))
 
     except Exception as e:
