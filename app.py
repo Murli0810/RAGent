@@ -12,22 +12,28 @@ from langchain_core.tools import tool
 from datetime import datetime
 from langchain_tavily import TavilySearch
 
-
+#loading data from env file
 load_dotenv()
 
+#loading pdf file
 loader = PyPDFLoader("ragent_test.pdf")
 pages = loader.load()
 
+#spliting text from pdf into chunks
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
 chunks = text_splitter.split_documents(pages)
 
+#google's embedding model
 embeddings_model = GoogleGenerativeAIEmbeddings(model="gemini-embedding-2-preview")
 
+#Initializing the vector store and retriever
 vector_store = FAISS.from_documents(chunks, embeddings_model)
 retriever = vector_store.as_retriever(search_kwargs={"k": 3})
 
+#Google's chatting model
 model = ChatGoogleGenerativeAI(model="gemini-3.1-flash-lite", temperature=0.2)
 
+#RAG tool for pdf recognition
 @tool
 def RAG_agent(query: str) -> str:
     """Return an answer to the user's question based on the retrieved context from the document whenver user says to use the document, otherwise answer based on your general knowledge."""
@@ -62,6 +68,7 @@ def RAG_agent(query: str) -> str:
     except Exception as e:
         return f"\nAn error occurred inside execution chain: {e}"
 
+#Tool to get current time and date
 @tool
 def get_current_time() -> str:
     """Returns the current system date and time. 
@@ -71,6 +78,7 @@ def get_current_time() -> str:
     now= datetime.now()
     return now.strftime("%Y-%m-%d %H-%M-%S")
 
+#Tool for calculation
 @tool
 def calculator(expression: str) -> str:
     """Returns the final output of the calculation that the user asked.
@@ -83,6 +91,7 @@ def calculator(expression: str) -> str:
     except Exception as e:
         return f"Error evaluating expression: {str(e)}"
 
+#Tool for WebSearch
 tavily_tool = TavilySearch(
     max_results=5,
     description="""Search the internet for current or real-time information.
@@ -91,11 +100,13 @@ tavily_tool = TavilySearch(
     Do NOT use for document-related questions."""
 )
 
+#LLM persona
 SYSTEM_MESSAGE = SystemMessage(content="""You are a helpful assistant with access to tools.
 Only call a tool when the user's current message explicitly requires it.
 Otherwise answer with your own intelligence.
 """)
 
+#Binding tools to LLM
 tools= [RAG_agent, get_current_time, calculator, tavily_tool]
 model_with_tools= model.bind_tools(tools)
 
