@@ -17,6 +17,9 @@ An intelligent AI agent that combines **Retrieval-Augmented Generation (RAG)**, 
 
 ---
 
+#### Deployed Link: https://ragent-08.streamlit.app/(https://ragent-08.streamlit.app/)
+
+---
 ## 🛠️ Tech Stack
 
 - **LLM** — Google Gemini (`gemini-1.5-flash`)
