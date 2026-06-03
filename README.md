@@ -26,7 +26,7 @@ An intelligent AI agent that combines **Retrieval-Augmented Generation (RAG)**, 
 - **PDF Loader** — PyPDF (via LangChain)
 - **Web Search** — Tavily AI
 - **Agent Pattern** — ReAct (Reasoning + Acting)
-
+> UI built with Streamlit. Frontend styling assisted by AI.
 ---
 
 ## 📁 Project Structure
@@ -90,10 +90,15 @@ loader = PyPDFLoader("your_document.pdf")
 ```
 
 ### 6. Run RAGent
-```bash
-python app.py
-```
 
+### CLI Version
+```bash
+python cli_app.py
+```
+### Web UI Version
+```bash
+streamlit run streamlit_app.py
+```
 ---
 
 ## 💬 Example Conversations
