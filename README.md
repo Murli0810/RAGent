@@ -161,7 +161,7 @@ asteval
 
 Install all at once:
 ```bash
-pip install langchain langchain-community langchain-google-genai langchain-tavily google-generativeai faiss-cpu pypdf python-dotenv asteval
+pip install langchain langchain-community langchain-google-genai langchain-tavily google-generativeai faiss-cpu pypdf python-dotenv numexpr
 ```
 
 ---
